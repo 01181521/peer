@@ -29,4 +29,8 @@ sudo apt update
 sudo apt install npm
 sudo npm install -g ganache-cli
 ```
+The command to run ganache is
+```
+ganache-cli
+```
  
