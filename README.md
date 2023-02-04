@@ -2,7 +2,7 @@
 ## How to run
 The environment is
 
-`<python==3.7.13 pytorch==1.12.0 flask==2.1.2 web3==5.29.2>`
+```<python==3.7.13 pytorch==1.12.0 flask==2.1.2 web3==5.29.2>```
 
 ## Encryption
 
@@ -20,7 +20,9 @@ The encrypted image will then be available in the `result` folder. To decrypt im
 
 You need to install ganache before running the code, the command is as follows.
 
-`sudo apt update`
-`sudo apt install npm`
-`sudo npm install -g ganache-cli`
+```
+sudo apt update
+sudo apt install npm
+sudo npm install -g ganache-cli
+```
  
