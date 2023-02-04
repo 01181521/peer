@@ -15,3 +15,12 @@ After completing the training create a folder in the `checkpoints` folder e.g. `
 `<python test.py --dataroot datasets/cifar --name encrypt_pretrained --model test --no_dropout>`
 
 The encrypted image will then be available in the `result` folder. To decrypt image, use `40_net_G_B.pth` in the same way as above.
+
+## Blockchain
+
+You need to install ganache before running the code, the command is as follows.
+
+`''sudo apt update
+  sudo apt install npm
+  sudo npm install -g ganache-cli
+  ''`
