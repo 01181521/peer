@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/menu.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <script src="https://cdn.socket.io/3.0.4/socket.io.js"></script>
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="jqueryui/style.css">
+  <title>发送</title>
+  <style>
+    #row1{
+        margin-right: -15px;
+        margin-left: -30px;
+      }
+    
+      .pad{
+        margin:60px auto;
+        width:360px;
+        padding-top:25px;
+	      padding-bottom:25px;
+	      padding-right:50px;
+	      padding-left:50px;
+      }
+  </style>
+</head>
+<body>
+    <!-- <h2>垂直导航条</h2>
+    <p>在点击了选项后，我们可以添加 "active" 类来标准哪个选项被选中。;height: 100px</p> -->
+    <div class="jumbotron text-center" style="margin-bottom:0 " id="jbt">
+        <h1>在线检测</h1>   
+    </div>
+
+      <div class="container-fluid ">
+        <div class="row" id="row1">
+          <div class="col-sm-3 menu" >
+            <ul id="ul1">
+            
+              <li><a href="./home">主页</a></li>
+              <li><a href="./upload">上传</a></li>
+              <li><a href="./search">检索</a></li>
+              <li><a class="active" href="./sendpic">发送</a></li>
+              <li><a href="./authority">权限</a></li>
+              <li><a href="./quit">退出</a></li>
+            </ul>
+          </div>
+      
+          <!-- <div class="col-sm-5 bg-light text-dark "style="margin:0 auto;border:2px dashed gray " > -->
+            <!-- width:400px;height:400px;width:400px;height:200px; -->
+          <div class="col-sm-5 "> 
+            <div class="bg-light pad">
+              <!-- <h2>
+              <span class="badge badge-secondary">加密图像上传</span>
+            </h2> -->
+            <!-- <br> -->
+            
+            <p>用户名：</p>
+            <input type="text" style="width:220px" name="send-room" id="send-room" placeholder="用户名">
+            <br>
+            <br>
+            <p>消  息：</p>
+            <input type="text" style="width:220px" name="send-msg" id="send-msg" placeholder="消息">
+            <br>
+            <br>
+            <p>选择图片文件夹：</p>
+            <input type="file" style="width:220px" id="send-files" class="border border-dark" webkitdirectory /> 
+            <br>
+            <br>
+            <button type="button" style="width:220px" id="send-btn" class="btn btn-info" onclick="send1()">发送</button>
+            </div>
+            
+          </div>
+          
+          <div class="col-sm-4">
+            
+          </div>
+        </div>
+      </div>
+     
+    
+</body>
+<script>
+  $(document).ready(function() {
+
+    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+      document.getElementById( "ul1" ).style.position="relative";
+      document.getElementById("jbt").setAttribute("class","jumbotron text-center");
+    }0
+    namespace = '/test';
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+    socket.on('receivemsg', function(message) {
+    alert(message);
+    });  
+  });
+  
+  function send1(){
+    var send_msg = document.getElementById("send-msg");
+    var send_room = document.getElementById("send-room");
+    var send_files = document.getElementById("send-files");
+    
+    var msg = send_msg.value;
+    var room = send_room.value;
+    // alert(user);
+    
+    var files = send_files.files;
+    console.log(files);
+    var formdata = new FormData();
+    formdata.append("msg" , msg);
+    formdata.append("room" , room);
+    // alert("111");
+    console.log(files.length);
+    for(var i = 0; i < files.length; i++)
+    {
+      formdata.append("file" , files[i]);
+    }
+    console.log(formdata);
+    var xhr = new XMLHttpRequest();
+    xhr.open("post","./sendpic");
+    
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4 && xhr.status == 200){
+        console.log(xhr.responseText);
+        // 将JSON转化为JS对象，JS->JSON:JSON.stringify() 
+        var json = JSON.parse(xhr.responseText);
+        alert(json["msg"]);
+      }
+    }
+    xhr.send(formdata);
+  }
+
+  
+
+  
+</script>
+</html>

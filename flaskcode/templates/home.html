@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/menu.css" rel="stylesheet" type="text/css" />
+  <link href="/static/myul.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <script src="https://cdn.socket.io/3.0.4/socket.io.js"></script>
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="jqueryui/style.css">
+  <title>主页</title>
+  <style>
+    .div1{
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 160px;
+      background-color: #f1f1f1;
+      position: fixed; 
+      height: 100%;
+      /* height: 3000px; */
+      overflow: auto;
+      /* overflow-y: scroll; */
+    }
+    #row1{
+          margin-right: -15px;
+          margin-left: -30px;
+      }
+    
+    .scroll{
+      overflow-y: scroll;
+      overflow-x: scroll;
+    }
+  </style>
+</head>
+<body>
+    <!-- <h2>垂直导航条</h2>
+    <p>在点击了选项后，我们可以添加 "active" 类来标准哪个选项被选中。;height: 100px</p> -->
+    <div class="jumbotron text-center fixed-top" style="margin-bottom:0;position: sticky; " id="jbt">
+        <h1>在线检测</h1>   
+    </div>
+    
+      <div class="container-fluid ">
+        <div class="row" id="row1">
+          <div class="col-sm-3 menu" >
+            
+            <ul id="ul1">
+            
+              <li><a class="active"  href="./home">主页</a></li>
+              <li><a href="./upload">上传</a></li>
+              <li><a href="./search">检索</a></li>
+              <li><a href="./sendpic">发送</a></li>
+              <li><a href="./authority">权限</a></li>
+              <li><a href="./quit">退出</a></li>
+            </ul>  
+           
+            
+          </div>
+      
+          <!-- <div class="col-sm-4 bg-light text-dark "style="margin:0 auto;border:2px dashed gray"> -->
+          <div class="col-sm-5 ">
+            <br>
+            <h2>
+              欢迎来到主页！
+            </h2>
+            <br>
+            <p>用户：{{msg}}</p>
+            <p>邮箱：</p>
+            <br>
+            <br>
+            <h3>新消息：</h3>
+            <div id= "dialogDiv"  >您确定要授权？</div>
+            <br>
+            <!-- <div class="scroll bg-light text-dark "style="margin:0 auto;border:2px dashed gray">
+              <p>55555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
+              <p>55555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
+              <p>55555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
+              <p>55555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
+              <p>55555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
+              <p>55555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
+            </div> -->
+            <ul id="myul"class="myul" style="white-space:nowrap">
+              {% for list in lists %}
+              <li >Received #  {{list}} </li>
+              {% endfor %}
+               
+            </ul>
+          </div>
+          
+          <div class="col-sm-4">
+            
+          </div>
+        </div>
+      </div>
+<script>
+
+  $(document).ready(function() {
+
+    // document.getElementById( "ul1" ).setAttribute("position", "relative"); 
+    
+    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+      document.getElementById( "ul1" ).style.position="relative";
+      document.getElementById("jbt").setAttribute("class","jumbotron text-center");
+    }
+    // document.getElementById( "ul1" ).style.position="relative";
+    // $('#myul').append( '<li >'+'Received #'+document.body.clientHeight +'</li>');
+    namespace = '/test';
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+  
+    
+    socket.on('message', function(message) {
+        $('#log').append("66666").append('<br/>');
+        // $('#log').append( $('<div/>').text('Received #' + message).html()+ '<br>');
+        $('#log').append('<button type="button">Click Me!</button>');
+        $('#log').append( 'Received #' + message+ '<br>');
+        // alert(message);
+    });
+    
+    socket.on('receivemsg', function(message) {
+        // $('#log').append("rrrrrrrrr").append('<br/>');+'<li/>'+'Received #'
+        // $('#log').append( $('<div/>').text('Received #' + message).html()+ '<br>');class="li"
+        //$('#myul').append( '<li >'+ message +'</li>');
+        $('#myul').prepend( '<li style="display:inline-block">'+ message +'</li>');
+        alert(message[b]);
+    });
+
+    socket.on('receivepic', function(msg) {
+        // $('#log').append("rrrrrrrrr").append('<br/>');+'<li/>'+'Received #'
+        // $('#log').append( $('<div/>').text('Received #' + message).html()+ '<br>');class="li"
+        $('#myul').append( '<li >'+ msg['a'] +'</li>');
+        alert(msg['b']);
+    });
+    
+    socket.on('my_response', function(msg) {
+        $('#log').append("77777777777777").append('<br/>');
+        $('#log').append( $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html()+'<br>' );
+    });
+    
+    $( "#dialogDiv" ).dialog({
+            autoOpen : false ,   // 是否自动弹出窗口
+            modal : true ,    // 设置为模态对话框
+            resizable : true ,
+            width : 410,   //弹出框宽度
+            height : 300,   //弹出框高度
+            title : "用户登录" , 
+            center:true,//弹出框标题
+            position : 'center',  //窗口显示的位置
+            buttons:{
+            '确定' : function (){
+            //alert(msg);
+            
+            socket.emit('answer', {msg:msg});
+            $( this ).dialog( "close" );
+            },
+            '取消' : function (){
+            $( this ).dialog( "close" );
+            }
+            }
+        }); 
+            
+    var msg;
+    $('#myul').on('click','li', function(){
+        // alert($(this).text());
+        msg = $(this).text();
+        $( "#dialogDiv" ).dialog( "open" );
+        
+    });
+    
+    $('form#room').submit(function(event) {
+        // $('#log').append("22222222").append('<br/>');
+        socket.emit('sendmsg', {room: $('#user_data').val(),msg: $('#room_data').val()});
+        // $('#log').append("666666666666").append('<br/>');
+        alert("jhjh");
+        return false;
+    });
+            
+  });
+</script>      
+    
+</body>
+</html>

@@ -1,0 +1,30 @@
+.myul {
+    border-style:solid;
+    border-width:2px;
+    border-color: #f1f1f1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /* width: 160px;
+    background-color: #f1f1f1;
+    position: fixed; 
+    height: 100%; */
+    height:200px;
+    overflow: auto;
+}
+.myul li{
+    /* list-style:none;  */
+    list-style: circle;
+    /* height:30px;  */
+    background-color:#f3f7f500; 
+    color:crimson;
+    /* width:300px;  */
+    margin-bottom:5px; 
+    line-height:24px; 
+    padding-left:4px; 
+    font-size:20px;
+}
+.myul li:hover{
+    /* background-color:darkgrey; */
+    color:aquamarine;
+}

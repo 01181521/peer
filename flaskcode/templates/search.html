@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/menu.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <script src="https://cdn.socket.io/3.0.4/socket.io.js"></script>
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="jqueryui/style.css">
+  <title>检索</title>
+  <style>
+    #row1{
+          margin-right: -15px;
+          margin-left: -30px;
+      }
+    .pad{
+      margin:60px auto;
+      width:360px;
+      padding-top:25px;
+      padding-bottom:25px;
+      padding-right:50px;
+      padding-left:50px;
+    }
+  </style>
+</head>
+<body>
+    <!-- <h2>垂直导航条</h2>
+    <p>在点击了选项后，我们可以添加 "active" 类来标准哪个选项被选中。;height: 100px</p> -->
+    <div class="jumbotron text-center" style="margin-bottom:0 " id="jbt">
+        <h1>在线检测</h1>   
+    </div>
+
+      <div class="container-fluid margin-left: 200px">
+
+
+        
+        <div class="row" id="row1">
+          <div class="col-sm-3 menu " >
+            <ul id="ul1">
+            
+              <li><a href="./home">主页</a></li>
+              <li><a href="./upload">上传</a></li>
+              <li><a class="active" href="./search">检索</a></li>
+              <li><a href="./sendpic">发送</a></li>
+              <li><a href="./authority">权限</a></li>
+              <li><a href="./quit">退出</a></li>
+            </ul>
+          </div>
+      
+          <!-- <div class="col-sm-5 bg-light text-dark "style="margin:0 auto;border:2px dashed gray"> -->
+          <div class="col-sm-5 ">
+            
+            <!-- <div class="bg-light text-dark "style="margin:0 auto;border:2px dashed gray"> -->
+            <div class="bg-light pad "id ="linkdiv">
+              <h2>
+                <span class="badge badge-secondary">加密图像检索</span>
+              </h2>
+      
+              <br>
+              <p>选择查询图片：</p>
+              <input type="file"style="width:220px" class="border border-dark" id="search-file" />
+              <br>
+              <br>
+              <button type="submit" style="width:220px" class="btn btn-info " id="search-btn" onclick="search()" >检索</button>
+              <br>
+              <br>
+              <button type="submit" style="width:220px" class="btn btn-info " id="test-btn" onclick="arch()" >发送</button>
+              <!-- <button type="submit" class="btn btn-default" id="download-btn" onclick="download()">下载</button> -->
+              <br>
+              <br>
+              <!-- <a  href="./result1">点击此处下载</a> -->
+              <a  href="./zip/aaa/2022070421124976186888.jpg">点击此处下载</a>
+              <!-- /home/ubuntu/code/test/new/storage -->
+              <!-- <div id ="linkdiv"></div> -->
+            </div>
+            <!-- <a  href="./result">下载</a> -->
+            <img id="result" src = "">
+          </div>
+          
+          <div class="col-sm-4">
+            
+          </div>
+        </div>
+      </div>
+      
+      <!-- <a href="/static/img/kk.jpg" aria-valuetext="123456"></a> -->
+    
+</body>
+<script>
+  $(document).ready(function() {
+
+    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+      document.getElementById( "ul1" ).style.position="relative";
+      document.getElementById("jbt").setAttribute("class","jumbotron text-center");
+    }
+    namespace = '/test';
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+    socket.on('receivemsg', function(message) {
+    alert(message);
+    }); 
+    
+    
+    
+
+
+
+
+   });
+
+function arch(){
+    
+    // reader.onload = function(e) {
+       
+        alert("111");
+        var xhr = new XMLHttpRequest();
+        //xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+        xhr.open("post","./test");
+        //回调
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState==4 && xhr.status==200){
+                console.log(xhr.responseText);
+                // var obj = document.getElementById("result");
+                // obj.setAttribute("src","./search");
+                var json = JSON.parse(xhr.responseText);
+                alert(json["msg"]);
+                
+            }
+        }
+        
+        xhr.send();
+        // xhr.upload.onprogress = (evt) => {
+        //                 console.log(evt);
+        //                 var progressWidth = (evt.loaded / evt.total) * 100 + '%';
+        //                 $('.progress > div').css('width', progressWidth);
+        //             }
+
+    // }
+
+
+  }
+
+
+
+  function search(){
+      var name=document.getElementById('search-file');
+      console.log(name.value);
+  
+      //获取文件的名称
+      var arr = name.value.split('\\');
+      var fileName = arr[arr.length-1];
+  
+      arr = fileName.split('.');
+      fileName = arr[0];
+       
+      var reader = new FileReader();
+      reader.readAsDataURL(name.files[0]);
+      //reader.readAsDataURL(document.querySelector('input[type=file]').files[0]);//异步读取文件内容，结果用data:url的字符串形式表示
+      /*当读取操作成功完成时调用*/
+      reader.onload = function(e) {
+          //console.log(e); //查看对象属性里面有个result属性，属性值，是一大串的base64格式的东西，这个就是我们要的图片
+          //console.log(this.result);//取得数据 这里的this指向FileReader（）对象的实例reader
+      
+  
+  
+          var file = name.value;
+          //创建formdata对象
+          var formdata = new FormData();
+          formdata.append("file",this.result);
+          // formdata.append("selectSort",selectText);
+          formdata.append("name",fileName); 
+          
+  
+          //创建xhr，使用ajax进行文件上传
+          var xhr = new XMLHttpRequest();
+          //xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+          xhr.open("post","./search");
+          //回调
+          xhr.onreadystatechange = function () {
+              if (xhr.readyState==4 && xhr.status==200){
+                  console.log(xhr.responseText);
+                  var obj = document.getElementById("result");
+                  //obj.setAttribute("src","./result");
+                  // var btn = document.getElementById("download-btn");
+                  // btn.setAttribute("class","btn btn-success");
+                  $('#linkdiv').append( '<a  href="./result">点击此处下载</a>');
+              }
+          }
+          
+          xhr.send(formdata);
+  
+      }
+  
+  
+  }
+  
+  function download(){
+    //window.open("shangxinzheng.com:9999/download");
+    var xhr = new XMLHttpRequest(); 
+    xhr.open("get","./result");
+    xhr.onreadystatechange = function () {
+              if (xhr.readyState==4 && xhr.status==200){
+                  alert("11111")
+              }
+          }
+    xhr.send();
+  }
+
+
+
+
+
+  
+</script>
+</html>
