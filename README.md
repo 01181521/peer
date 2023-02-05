@@ -39,8 +39,8 @@ The command to run ganache is
 ganache-cli
 ```
 ## Hash
-  You can get the code from the link below.
-  [https://github.com/swuxyj/DeepHash-pytorch](https://github.com/swuxyj/DeepHash-pytorch)
+You can get the code from the link below. 
+[https://github.com/swuxyj/DeepHash-pytorch](https://github.com/swuxyj/DeepHash-pytorch)
 
 ## flaskcode
 ```
