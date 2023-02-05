@@ -1,4 +1,5 @@
 # peer
+A novel privacy-preserving large-scale image retrieval framework. 
 ## How to run
 The environment is
 
@@ -7,6 +8,10 @@ The environment is
 ## Encryption
 
 Place the training set folder under the `datasets` folder. The training set folder should contain two folders `trainA` and `trainB`, where `trainA` contains 1000 randomly selected training images and `trainB` contains a set of images encrypted using a common encryption algorithm such as pixel permutation encryption. The training code is as follows.
+
+```
+cd CycleGAN-encryption
+```
 
 ```
 python train.py --dataroot ./datasets/cifar_train --name cifar_cyclegan --model cycle_gan --n_epochs 40
@@ -32,5 +37,14 @@ sudo npm install -g ganache-cli
 The command to run ganache is
 ```
 ganache-cli
+```
+##Hash
+You can get the code from the link below.[here](https://github.com/swuxyj/DeepHash-pytorch)
+
+## flaskcode
+```
+cd flaskcode
+python storage.py
+python main.py
 ```
  
