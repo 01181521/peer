@@ -17,7 +17,7 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 resnet_dict = {"ResNet18": models.resnet18, "ResNet34": models.resnet34, "ResNet50": models.resnet50,
                "ResNet101": models.resnet101, "ResNet152": models.resnet152}
 class ResNet(nn.Module):
-    def __init__(self, hash_bit, res_model="ResNet50"):
+    def __init__(self, hash_bit, res_model="ResNet18"):
         super(ResNet, self).__init__()
         # model_resnet = resnet_dict[res_model](pretrained=True)
         model_resnet = resnet_dict[res_model](pretrained=False)
@@ -60,7 +60,7 @@ def querylist(path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     net = ResNet(16).to(device)
-    model_dict= torch.load('./model/cifar.pth')
+    model_dict= torch.load('./model/corel10k.pt')
     net.load_state_dict(model_dict)
 
     net.eval()
