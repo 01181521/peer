@@ -40,7 +40,7 @@ ganache-cli
 ```
 ## Hash
 You can get the code from the link below.   
-[here](https://github.com/swuxyj/DeepHash-pytorch)
+[here](https://github.com/)
 
 ## flaskcode
 ```
