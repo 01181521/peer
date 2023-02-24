@@ -5,7 +5,7 @@ from web3 import Web3
 import time
 
 
-f1 = open(r"./database.txt","r")
+f1 = open(r"./model/database.txt","r")
 file1 = f1.read()
 
 
