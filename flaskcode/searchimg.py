@@ -17,7 +17,7 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 resnet_dict = {"ResNet18": models.resnet18, "ResNet34": models.resnet34, "ResNet50": models.resnet50,
                "ResNet101": models.resnet101, "ResNet152": models.resnet152}
 class ResNet(nn.Module):
-    def __init__(self, hash_bit, res_model="ResNet18"):
+    def __init__(self, hash_bit, res_model="ResNet50"):
         super(ResNet, self).__init__()
         # model_resnet = resnet_dict[res_model](pretrained=True)
         model_resnet = resnet_dict[res_model](pretrained=False)
@@ -48,11 +48,14 @@ class ResNet(nn.Module):
 
             
 def tohex(code):
-    code= str(code)
-    code_hex = hex(int(code,2))[2:]
+    code = np.maximum(code, 0)
+    code = code.astype(int)
+    a = str(code)[1:-1].replace(' ','')
+    code_hex = hex(int(a,2))[2:]
     
     if len(code_hex) < 4:
         code_hex = zero*(4-len(code_hex)) + code_hex
+    print(code_hex)
     return code_hex
 
 
@@ -60,7 +63,8 @@ def querylist(path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     net = ResNet(16).to(device)
-    model_dict= torch.load('./model/corel10k.pt')
+    #model_dict= torch.load('./model/corel10k.pt')
+    model_dict= torch.load('./model/cifar10.pth',map_location=device)
     net.load_state_dict(model_dict)
 
     net.eval()
