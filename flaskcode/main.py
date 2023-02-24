@@ -295,22 +295,29 @@ def search():
         queryimg = request.files.get('file')
         querydir = basedir + "/storage/" + user_info + '/query'
         deletedir(querydir)
-        imgpath = path + 'queryimg.jpg'
-        file.save(imgpath)
+        imgpath = querydir + '/queryimg.jpg'
+        queryimg.save(imgpath)
+        # print('11111111111111111111')
         list1,list2 = querylist(imgpath)
-        with open('./storage/images.txt', "r") as f:
+        # for i in list1:
+        #     print(i)
+        # print('list')
+        # for i in list2:
+        #     print(i)
+        # print("1111111111111111111111111111111111111")
+        with open('./storage/database.txt', "r") as f:
             lines =f.readlines()
         list = list1 + list2
 
         n = 1
         for i in list:
-            path = lines[i].strip().split()[0]
+            path = lines[i].strip()
+            owner = path.split('/')[0]
             result = querydir+'/result'
             makedir(result)
-            shutil.copy2(os.path.join(basedir + "/storage/",path),result+'/'+str(n)+'.jpg')
+            shutil.copy2(os.path.join(basedir + "/storage/",path),result+'/'+owner+'-'+str(n)+'.jpg')
             n +=1
-
-        return redirect('/result')
+        return jsonify({"msg": "检索成功"})
     
 @app.route('/result', methods=["POST", "GET"])
 def result():
