@@ -1,5 +1,6 @@
 # peer
 A novel privacy-preserving large-scale image retrieval framework. 
+![image](framework.png)
 ## How to run
 The environment is
 
