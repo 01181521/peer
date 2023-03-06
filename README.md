@@ -1,6 +1,6 @@
 # peer
 A novel privacy-preserving large-scale image retrieval framework. 
-![image](https://github.com/01181521/peer/framework.png)
+![image](https://github.com/01181521/peer/blob/main/framework.png)
 ## How to run
 The environment is
 
